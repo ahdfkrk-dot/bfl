@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чек-лист документов для банкротства | ЮФ Интеллектуалъ</title>
+    <style>
+        :root {
+            --primary-red: #c41e3a;
+            --primary-red-dark: #a01830;
+            --bg: #f5f5f5;
+            --card: #ffffff;
+            --text: #1a1a1a;
+            --text-secondary: #666666;
+            --border: #e0e0e0;
+            --green: #2e7d32;
+            --green-light: #e8f5e9;
+            --orange: #f57c00;
+            --orange-light: #fff3e0;
+            --shadow: 0 2px 4px rgba(0,0,0,.08);
+            --shadow-lg: 0 4px 12px rgba(0,0,0,.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+        }
+        
+        .header-bar {
+            background: #fff;
+            border-bottom: 2px solid var(--primary-red);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-red);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            font-family: 'Arial', sans-serif;
+            border-radius: 4px;
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .logo-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text);
+            letter-spacing: 1px;
+            font-family: 'Arial', sans-serif;
+        }
+        .logo-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            font-family: 'Arial', sans-serif;
+        }
+        .contact-phone {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-red);
+            text-decoration: none;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 30px 20px; }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--text);
+            text-align: center;
+            border-bottom: 3px solid var(--primary-red);
+            padding-bottom: 15px;
+        }
+        .page-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .warning-banner {
+            background: var(--orange-light);
+            border-left: 4px solid var(--orange);
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+        }
+        .warning-banner strong { color: #e65100; }
+        
+        .progress-section {
+            background: var(--card);
+            border-radius: 4px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border-top: 3px solid var(--primary-red);
+        }
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-family: 'Arial', sans-serif;
+        }
+        .progress-header span { 
+            font-weight: bold; 
+            font-size: 16px;
+            color: var(--text);
+        }
+        .progress-count { 
+            color: var(--primary-red); 
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .progress-bar-bg {
+            height: 14px;
+            background: var(--border);
+            border-radius: 7px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-red), #e53935);
+            border-radius: 7px;
+            transition: width .5s ease;
+            width: 0%;
+        }
+        .progress-bar-fill.done { background: linear-gradient(90deg, var(--green), #43a047); }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-family: 'Arial', sans-serif;
+        }
+        .filter-btn {
+            padding: 8px 18px;
+            border-radius: 4px;
+            border: 1.5px solid var(--border);
+            background: var(--card);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all .2s;
+            color: var(--text-secondary);
+        }
+        .filter-btn:hover { 
+            border-color: var(--primary-red); 
+            color: var(--primary-red);
+        }
+        .filter-btn.active {
+            background: var(--primary-red);
+            color: #fff;
+            border-color: var(--primary-red);
+        }
+        
+        .doc-card {
+            background: var(--card);
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: box-shadow .2s;
+            border-left: 3px solid transparent;
+        }
+        .doc-card:hover { 
+            box-shadow: var(--shadow-lg);
+            border-left-color: var(--primary-red);
+        }
+        .doc-card.hidden { display: none; }
+        .doc-card.completed {
+            border-left-color: var(--green);
+        }
+        .doc-card.completed .doc-header { 
+            background: var(--green-light);
+        }
+        .doc-card.completed .doc-title { 
+            text-decoration: line-through; 
+            color: var(--text-secondary);
+        }
+        
+        .doc-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 18px 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: background .2s;
+        }
+        .doc-header:hover { background: #fafafa; }
+        
+        .checkbox-wrap {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .checkbox-wrap input[type="checkbox"] {
+            width: 20px; height: 20px;
+            accent-color: var(--green);
+            cursor: pointer;
+        }
+        .doc-num {
+            flex-shrink: 0;
+            width: 32px; height: 32px;
+            background: var(--primary-red);
+            color: #fff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+        }
+        .doc-card.completed .doc-num {
+            background: var(--green);
+        }
+        .doc-title-block { flex: 1; }
+        .doc-title { 
+            font-weight: bold; 
+            font-size: 15px; 
+            margin-bottom: 6px;
+            font-family: 'Arial', sans-serif;
+        }
+        .doc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-weight: 500;
+            font-family: 'Arial', sans-serif;
+        }
+        .tag-place { background: #f3e5f5; color: #6a1b9a; }
+        .tag-time { background: #e3f2fd; color: #1565c0; }
+        .tag-online { background: var(--green-light); color: var(--green); }
+        .tag-offline { background: #ffebee; color: #c62828; }
+        .tag-conditional { background: var(--orange-light); color: #e65100; }
+        
+        .arrow {
+            flex-shrink: 0;
+            margin-top: 4px;
+            transition: transform .3s;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .doc-card.open .arrow { transform: rotate(180deg); }
+        
+        .doc-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease;
+        }
+        .doc-card.open .doc-body { max-height: 2000px; }
+        .doc-body-inner {
+            padding: 0 20px 20px 66px;
+            font-family: 'Arial', sans-serif;
+        }
+        .doc-body-inner h4 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--primary-red);
+            margin: 16px 0 8px;
+            font-weight: bold;
+        }
+        .doc-body-inner h4:first-child { margin-top: 0; }
+        .doc-body-inner p, .doc-body-inner li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .doc-body-inner ul, .doc-body-inner ol {
+            padding-left: 20px;
+        }
+        .doc-body-inner li { margin-bottom: 6px; }
+        .doc-body-inner .tip {
+            background: var(--green-light);
+            border-left: 3px solid var(--green);
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #1b5e20;
+        }
+        .doc-body-inner .warn {
+            background: #ffebee;
+            border-left: 3px solid var(--primary-red);
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #b71c1c;
+        }
+        .doc-body-inner code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+        }
+        .template-box {
+            background: #fafafa;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 14px;
+            margin-top: 12px;
+            font-size: 13px;
+            white-space: pre-wrap;
+            color: var(--text);
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 8px; right: 8px;
+            background: var(--primary-red);
+            color: #fff;
+            border: none;
+            padding: 5px 14px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Arial', sans-serif;
+        }
+        .copy-btn:hover { background: var(--primary-red-dark); }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-top: 2px solid var(--primary-red);
+            font-family: 'Arial', sans-serif;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .footer strong {
+            color: var(--primary-red);
+        }
+        
+        @media (max-width: 600px) {
+            .header-bar {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .page-title { font-size: 22px; }
+            .doc-body-inner { padding-left: 20px; }
+            .doc-header { padding: 14px 16px; }
+            .container { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-bar">
+    <div class="logo-section">
+        <div class="logo-icon">ИЪ</div>
+        <div class="logo-text">
+            <div class="logo-title">ИНТЕЛЛЕКТУАЛЪ</div>
+            <div class="logo-subtitle">юридическая фирма</div>
+        </div>
+    </div>
+    <a href="tel:+78129610717" class="contact-phone">+7 (812) 961-07-17</a>
+</div>
+
+<div class="container">
+    <h1 class="page-title">Чек-лист: документы для банкротства</h1>
+    <p class="page-subtitle">Арбитражный суд г. Санкт-Петербурга и Ленинградской области · Июль 2026</p>
+
+    <div class="warning-banner">
+        <strong>⚠️ Важно:</strong> Если у вас открыто ИП — лучше закрыть его <em>до</em> подачи заявления на банкротство. Это упростит процедуру и снизит риски.
+    </div>
+
+    <div class="progress-section">
+        <div class="progress-header">
+            <span>Прогресс сбора документов</span>
+            <span class="progress-count" id="progressText">0 из 22</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="gosuslugi">🌐 Госуслуги</button>
+        <button class="filter-btn" data-filter="bank">🏦 Банки</button>
+        <button class="filter-btn" data-filter="fns">🏛️ ФНС / МФЦ</button>
+        <button class="filter-btn" data-filter="home">📑 Дома</button>
+        <button class="filter-btn" data-filter="court">⚖️ Суд</button>
+        <button class="filter-btn" data-filter="other">🔧 Прочее</button>
+        <button class="filter-btn" data-filter="conditional">❓ Условно</button>
+    </div>
+
+    <div id="docList"></div>
+
+    <div class="footer">
+        <p><strong>ЮФ «Интеллектуалъ»</strong> · Арбитражные споры · Банкротство · Семейные споры</p>
+        <p style="margin-top: 8px;">📞 +7 (812) 961-07-17 · 🌐 9610717.ru</p>
+        <p style="margin-top: 12px; font-size: 12px; color: #999;">© 2026 Все права защищены</p>
+    </div>
+</div>
+
+<script>
+const docs = [
+  {
+    id: 1,
+    title: "Справки из банка, подтверждающие наличие задолженности",
+    tags: ["bank"],
+    tagLabels: [{t:"Банк",c:"tag-place"},{t:"1–5 дней",c:"tag-time"},{t:"Онлайн",c:"tag-online"}],
+    where: "Каждый банк, где у вас есть или был кредит / кредитная карта.",
+    how: `<ol>
+      <li>Откройте мобильное приложение банка → раздел <strong>«Чат» / «Поддержка»</strong>.</li>
+      <li>Скопируйте шаблон запроса (см. ниже) и отправьте оператору.</li>
+      <li>Альтернатива: раздел <strong>«Кредиты» → «Справки» → «Справка о задолженности»</strong> — скачайте PDF.</li>
+      <li>Если счёт давно закрыт и в приложении не виден — обратитесь в отделение с паспортом.</li>
+    </ol>`,
+    tip: "Справка должна содержать РАСШИФРОВКУ: основной долг + проценты + неустойки/штрафы. Если банк выдаёт только общую сумму — требуйте детализацию через чат.",
+    template: `Здравствуйте! Готовлюсь к процедуре банкротства (ст. 213.4 ФЗ «О несостоятельности»). Прошу направить на email [ВАШ EMAIL] справку о полной задолженности по кредитному договору № [НОМЕР] с расшифровкой: основной долг, проценты, неустойки, штрафы. Документ должен быть заверен электронной подписью банка. Спасибо!`,
+    warn: null
+  },
+  {
+    id: 2,
+    title: "Копии кредитных договоров",
+    tags: ["bank"],
+    tagLabels: [{t:"Банк",c:"tag-place"},{t:"1–5 дней",c:"tag-time"},{t:"Онлайн",c:"tag-online"}],
+    where: "Личный кабинет банка или отделение.",
+    how: `<ol>
+      <li>В приложении: <strong>«Кредиты» → конкретный кредит → «Документы» → скачать договор (PDF)</strong>.</li>
+      <li>Через чат поддержки: попросите прислать копию договора на email.</li>
+      <li>В отделении: напишите заявление «Прошу выдать копию кредитного договора № ___».</li>
+    </ol>`,
+    tip: "Кредитная карта = кредитный договор. Даже если лимитом не пользовались, договор нужен.",
+    template: null,
+    warn: null
+  },
+  {
+    id: 3,
+    title: "Выписка из ЕГРН на недвижимость",
+    tags: ["gosuslugi","fns"],
+    tagLabels: [{t:"Госуслуги / МФЦ",c:"tag-place"},{t:"1–3 дня",c:"tag-time"},{t:"Онлайн",c:"tag-online"}],
+    where: "Портал Госуслуг (раздел «Росреестр») или МФЦ.",
+    how: `<ol>
+      <li>Госуслуги → Поиск: <strong>«Выписка из ЕГРН»</strong> → «Получить выписку об объекте недвижимости».</li>
+      <li>Введите адрес или кадастровый номер.</li>
+      <li>Оплатите госпошлину (от 290 ₽ за электронную).</li>
+      <li>Получите PDF с электронной подписью Росреестра на email.</li>
+    </ol>`,
+    tip: "Если недвижимости нет — закажите выписку об ОТСУТСТВИИ прав. Это тоже нужно для суда.",
+    template: null,
+    warn: null
+  },
+  {
+    id: 4,
+    title: "Договоры купли-продажи недвижимости и сведения о переходе прав за 3 года",
+    tags: ["home","gosuslugi"],
+    tagLabels: [{t:"Дом / Госуслуги",c:"tag-place"},{t:"1–5 дней",c:"tag-time"}],
+    where: "Домашний архив. Если нет на руках — выписка о переходе прав через Госуслуги / МФЦ.",
+    how: `<ol>
+      <li>Проверьте домашние папки: договор купли-продажи, дарения, приватизации.</li>
+      <li>Если продавали/дарили недвижимость за последние 3 года (с июля 2023) — найдите копию договора.</li>
+      <li>Выписка о переходе прав: Госуслуги → <strong>«Выписка из ЕГРН о переходе прав»</strong>.</li>
+      <li>Проверьте также супруга: не переоформлялась ли недвижимость на него/третьих лиц.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: "Скрытие сделок с недвижимостью за 3 года — основание для отказа в списании долгов!"
+  },
+  {
+    id: 5,
+    title: "Справка из ГИБДД о наличии/отсутствии транспортных средств",
+    tags: ["gosuslugi"],
+    tagLabels: [{t:"Госуслуги (ГИБДД)",c:"tag-place"},{t:"1–3 дня",c:"tag-time"},{t:"Онлайн",c:"tag-online"}],
+    where: "Госуслуги → раздел ГИБДД.",
+    how: `<ol>
+      <li>Госуслуги → Поиск: <strong>«Проверка транспортного средства»</strong> или «Справка о наличии ТС».</li>
+      <li>Альтернатива: раздел <strong>«Транспорт и вождение» → «Мои транспортные средства»</strong>.</li>
+      <li>Скачайте справку в PDF.</li>
+    </ol>`,
+    tip: "Если авто нет — справка об отсутствии тоже нужна для суда.",
+    template: null,
+    warn: null
+  },
+  {
+    id: 6,
+    title: "Договор купли-продажи автомобиля (если имеется/имелся)",
+    tags: ["home","conditional"],
+    tagLabels: [{t:"Дом",c:"tag-place"},{t:"Мгновенно",c:"tag-time"},{t:"Условно",c:"tag-conditional"}],
+    where: "Домашний архив.",
+    how: `<ol>
+      <li>Найдите договор купли-продажи авто (или ПТС, СТС).</li>
+      <li>Если продавали авто за последние 3 года — найдите копию договора продажи.</li>
+      <li>Сделайте скан/фото всех страниц.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: null
+  },
+  {
+    id: 7,
+    title: "Справка о пенсии / выплатах за 3 года (если начисляется)",
+    tags: ["gosuslugi","fns","conditional"],
+    tagLabels: [{t:"Госуслуги (СФР) / МФЦ",c:"tag-place"},{t:"1–5 дней",c:"tag-time"},{t:"Условно",c:"tag-conditional"}],
+    where: "Госуслуги → СФР, или лично в МФЦ.",
+    how: `<ol>
+      <li>Госуслуги → Поиск: <strong>«Справка о выплатах»</strong> или «Выписка о назначенных пенсиях и социальных выплатах».</li>
+      <li>Выберите период: <strong>июль 2023 — июль 2026</strong>.</li>
+      <li>Скачайте PDF.</li>
+      <li>Альтернатива: визит в МФЦ с паспортом и СНИЛС.</li>
+    </ol>`,
+    tip: "Документ может называться «Справка о видах и размерах социальных выплат». Это одно и то же.",
+    template: null,
+    warn: null
+  },
+  {
+    id: 8,
+    title: "Бухгалтерский баланс и налоговые декларации (если ИП)",
+    tags: ["fns","conditional"],
+    tagLabels: [{t:"ФНС / ЛК ИП",c:"tag-place"},{t:"Мгновенно",c:"tag-time"},{t:"Условно",c:"tag-conditional"}],
+    where: "Личный кабинет ИП на nalog.ru или отделение ФНС.",
+    how: `<ol>
+      <li>nalog.ru → Личный кабинет ИП → <strong>«Налоговая отчётность» → «Декларации»</strong>.</li>
+      <li>Скачайте последнюю поданную декларацию и бухгалтерский баланс.</li>
+      <li>Если не подавали — закажите справку в МИФНС.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: "Актуально ТОЛЬКО если вы являетесь или являлись ИП."
+  },
+  {
+    id: 9,
+    title: "Справка о наличии/отсутствии расчётных счетов + выписки по счетам",
+    tags: ["fns","bank"],
+    tagLabels: [{t:"МИФНС / Банки",c:"tag-place"},{t:"1–7 дней",c:"tag-time"}],
+    where: "МИФНС (для справки о счетах) + каждый банк (для выписок).",
+    how: `<ol>
+      <li><strong>Справка о счетах:</strong> Госуслуги → Поиск: «Сведения о банковских счетах» или визит в МИФНС.</li>
+      <li><strong>Выписки:</strong> в каждом банке → чат поддержки → запросите выписки за 3 года по ВСЕМ счетам, включая закрытые.</li>
+      <li>Используйте универсальный шаблон запроса (см. документ №1).</li>
+    </ol>`,
+    tip: "На Госуслугах есть сервис «Сведения о счетах и вкладах» — за 5 минут покажет ВСЕ банки, где у вас есть/были счета. Используйте как сверку!",
+    template: null,
+    warn: "Обязательно запросите выписки и по ЗАКРЫТЫМ счетам. Сокрытие счетов — основание для отказа в списании долгов."
+  },
+  {
+    id: 10,
+    title: "Копия СНИЛС (страховое свидетельство)",
+    tags: ["home"],
+    tagLabels: [{t:"Дом",c:"tag-place"},{t:"Мгновенно",c:"tag-time"}],
+    where: "Домашний архив.",
+    how: `<ol>
+      <li>Найдите зелёную карточку СНИЛС или уведомление АДИ-РЕГ.</li>
+      <li>Сделайте фото/скан.</li>
+      <li>Если утерян: Госуслуги → <strong>«Получение СНИЛС»</strong> → скачайте электронный дубликат.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: null
+  },
+  {
+    id: 11,
+    title: "Копия свидетельства о браке + копии всех страниц паспорта супруга",
+    tags: ["home"],
+    tagLabels: [{t:"Дом",c:"tag-place"},{t:"Мгновенно",c:"tag-time"}],
+    where: "Домашний архив.",
+    how: `<ol>
+      <li>Сфотографируйте/отсканируйте свидетельство о браке.</li>
+      <li>Скопируйте ВСЕ страницы паспорта супруга (включая пустые).</li>
+      <li>Если в разводе — свидетельство о расторжении брака.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: null
+  },
+  {
+    id: 12,
+    title: "Сведения о действующих/прекращённых браках и детях",
+    tags: ["gosuslugi","other"],
+    tagLabels: [{t:"ЗАГС / Госуслуги",c:"tag-place"},{t:"1–5 дней",c:"tag-time"}],
+    where: "ЗАГС по месту регистрации или Госуслуги.",
+    how: `<ol>
+      <li>Госуслуги → Поиск: <strong>«Сведения о браке»</strong> или «Повторное получение свидетельства».</li>
+      <li>Либо визит в ЗАГС с паспортом.</li>
+      <li>Если браков было несколько — нужны сведения по КАЖДОМУ.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: null
+  },
+  {
+    id: 13,
+    title: "Копии свидетельств о рождении детей (при наличии)",
+    tags: ["home","conditional"],
+    tagLabels: [{t:"Дом",c:"tag-place"},{t:"Мгновенно",c:"tag-time"},{t:"Условно",c:"tag-conditional"}],
+    where: "Домашний архив.",
+    how: `<ol>
+      <li>Найдите свидетельства о рождении всех детей.</li>
+      <li>Сделайте скан/фото.</li>
+      <li>Если утеряно: ЗАГС или Госуслуги → <strong>«Повторное получение свидетельства о рождении»</strong>.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: null
+  },
+  {
+    id: 14,
+    title: "Сведения о состоянии индивидуального лицевого счёта в СФР (ПФР)",
+    tags: ["gosuslugi"],
+    tagLabels: [{t:"Госуслуги (СФР)",c:"tag-place"},{t:"Мгновенно",c:"tag-time"},{t:"Онлайн",c:"tag-online"}],
+    where: "Госуслуги → СФР.",
+    how: `<ol>
+      <li>Госуслуги → Поиск: <strong>«Извещение о состоянии лицевого счёта»</strong>.</li>
+      <li>Нажмите «Получить выписку».</li>
+      <li>PDF с электронной подписью придёт мгновенно или в течение нескольких минут.</li>
+    </ol>`,
+    tip: "Это один из самых быстрых документов — скачивается за 2 минуты.",
+    template: null,
+    warn: null
+  },
+  {
+    id: 15,
+    title: "Справка об отсутствии судимости",
+    tags: ["gosuslugi"],
+    tagLabels: [{t:"Госуслуги (МВД)",c:"tag-place"},{t:"До 30 дней",c:"tag-time"},{t:"Онлайн",c:"tag-online"}],
+    where: "Госуслуги → раздел МВД.",
+    how: `<ol>
+      <li>Госуслуги → Поиск: <strong>«Справка об отсутствии судимости»</strong>.</li>
+      <li>Заполните заявление онлайн (нужен только паспорт).</li>
+      <li>Готовая справка придёт в Личный кабинет (PDF с ЭП МВД).</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: "⏰ ЗАКАЖИТЕ ПРЯМО СЕЙЧАС! Срок изготовления — до 30 дней. Это самый долгий документ в списке."
+  },
+  {
+    id: 16,
+    title: "Копия свидетельства ИНН",
+    tags: ["fns"],
+    tagLabels: [{t:"ЛК ФНС",c:"tag-place"},{t:"Мгновенно",c:"tag-time"},{t:"Онлайн",c:"tag-online"}],
+    where: "Личный кабинет налогоплательщика (nalog.ru).",
+    how: `<ol>
+      <li>nalog.ru → Личный кабинет → <strong>«Профиль» → «ИНН» → скачать свидетельство</strong>.</li>
+      <li>Или: Госуслуги → Поиск: «Узнать свой ИНН» → скачайте.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: null
+  },
+  {
+    id: 17,
+    title: "Документ об уплате 25 000 ₽ на депозит суда",
+    tags: ["court"],
+    tagLabels: [{t:"Арбитражный суд",c:"tag-place"},{t:"1 день",c:"tag-time"},{t:"Офлайн",c:"tag-offline"}],
+    where: "Сайт Арбитражного суда г. СПб и ЛО → оплата через банк.",
+    how: `<ol>
+      <li>Зайдите на сайт <strong>spb.arbitr.ru</strong> → раздел <strong>«Калькулятор госпошлин» / «Реквизиты»</strong>.</li>
+      <li>Выберите: <strong>«Внесение денежных средств на депозит суда»</strong>.</li>
+      <li>Распечатайте квитанцию с реквизитами.</li>
+      <li>Оплатите 25 000 ₽ в любом банке или через банковское приложение.</li>
+      <li>В назначении платежа ОБЯЗАТЕЛЬНО: <code>«Внесение на депозит суда для процедуры банкротства, ФИО полностью»</code>.</li>
+      <li>Сохраните чек/платёжное поручение.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: "Без корректного назначения платежа суд может не зачесть оплату!"
+  },
+  {
+    id: 18,
+    title: "Копия паспорта (все страницы, включая пустые)",
+    tags: ["home"],
+    tagLabels: [{t:"Дом",c:"tag-place"},{t:"Мгновенно",c:"tag-time"}],
+    where: "Домашний архив / сканер.",
+    how: `<ol>
+      <li>Отсканируйте или сфотографируйте ВСЕ страницы паспорта (разворот за разворотом).</li>
+      <li>Включая пустые страницы и страницу с семейным положением.</li>
+      <li>Сохраните в PDF или качественные JPG.</li>
+    </ol>`,
+    tip: "Лайфхак: приложение «CamScanner» или «Adobe Scan» на телефоне делает ровные сканы с автообрезкой.",
+    template: null,
+    warn: null
+  },
+  {
+    id: 19,
+    title: "Документ о регистрации по месту жительства (Форма №9)",
+    tags: ["gosuslugi","fns"],
+    tagLabels: [{t:"Госуслуги СПб / МФЦ",c:"tag-place"},{t:"1–3 дня",c:"tag-time"}],
+    where: "Портал «Госуслуги Санкт-Петербурга» (gu.spb.ru) или МФЦ.",
+    how: `<ol>
+      <li><strong>gu.spb.ru</strong> → Поиск: <strong>«Форма 9»</strong> или «Справка о регистрации».</li>
+      <li>Заполните заявление онлайн → получите PDF.</li>
+      <li>Альтернатива: визит в МФЦ с паспортом (выдают в день обращения).</li>
+      <li>Альтернатива: паспортный стол / управляющая компания.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: null
+  },
+  {
+    id: 20,
+    title: "Справка 2-НДФЛ за последние 3 года",
+    tags: ["fns"],
+    tagLabels: [{t:"ЛК ФНС",c:"tag-place"},{t:"Мгновенно",c:"tag-time"},{t:"Онлайн",c:"tag-online"}],
+    where: "Личный кабинет налогоплательщика (nalog.ru).",
+    how: `<ol>
+      <li>nalog.ru → Личный кабинет → <strong>«Доходы» → «Справки о доходах»</strong>.</li>
+      <li>Выберите годы: <strong>2023, 2024, 2025</strong> (и 2026 если уже есть).</li>
+      <li>Скачайте PDF каждой справки.</li>
+    </ol>`,
+    tip: "Если не работали официально — скачайте справку с нулевыми доходами или напишите объяснительную для суда.",
+    template: null,
+    warn: null
+  },
+  {
+    id: 21,
+    title: "Сведения о владении оружием (если трудоустроены в Росгвардии по СПб)",
+    tags: ["other","conditional"],
+    tagLabels: [{t:"Росгвардия",c:"tag-place"},{t:"До 30 дней",c:"tag-time"},{t:"Условно",c:"tag-conditional"}],
+    where: "Росгвардия (можно через Госуслуги).",
+    how: `<ol>
+      <li>Госуслуги → Поиск: <strong>«Разрешение на оружие»</strong> или «Сведения об оружии».</li>
+      <li>Либо запрос в территориальное подразделение Росгвардии по СПб.</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: "Актуально ТОЛЬКО если владеете оружием или трудоустроены в Росгвардии."
+  },
+  {
+    id: 22,
+    title: "Справка о закрытии ИП (если ИП было)",
+    tags: ["fns","conditional"],
+    tagLabels: [{t:"Госуслуги / ФНС",c:"tag-place"},{t:"1–3 дня",c:"tag-time"},{t:"Условно",c:"tag-conditional"}],
+    where: "Госуслуги → выписка из ЕГРИП, или ЛК ФНС.",
+    how: `<ol>
+      <li>Госуслуги → Поиск: <strong>«Выписка из ЕГРИП»</strong>.</li>
+      <li>Или: nalog.ru → сервис <strong>«Предоставление сведений из ЕГРИП»</strong>.</li>
+      <li>Скачайте PDF выписки, где указан статус «Прекратил деятельность».</li>
+    </ol>`,
+    tip: null,
+    template: null,
+    warn: "Актуально ТОЛЬКО если вы были зарегистрированы как ИП."
+  }
+];
+
+const list = document.getElementById('docList');
+docs.forEach(d => {
+  const card = document.createElement('div');
+  card.className = 'doc-card';
+  card.dataset.tags = d.tags.join(',');
+  card.dataset.id = d.id;
+
+  const tagsHTML = d.tagLabels.map(t => `<span class="tag ${t.c}">${t.t}</span>`).join('');
+
+  let bodyHTML = `<h4>📍 Где получить</h4><p>${d.where}</p>`;
+  bodyHTML += `<h4> Как получить (пошагово)</h4>${d.how}`;
+  if (d.tip) bodyHTML += `<div class="tip">💡 ${d.tip}</div>`;
+  if (d.warn) bodyHTML += `<div class="warn">⚠️ ${d.warn}</div>`;
+  if (d.template) {
+    bodyHTML += `<h4>📋 Шаблон запроса</h4>
+      <div class="template-box"><button class="copy-btn" onclick="copyTemplate(this)">Копировать</button>${d.template}</div>`;
+  }
+
+  card.innerHTML = `
+    <div class="doc-header" onclick="toggleCard(${d.id})">
+      <div class="checkbox-wrap" onclick="event.stopPropagation()">
+        <input type="checkbox" id="cb${d.id}" onchange="toggleDone(${d.id})">
+      </div>
+      <div class="doc-num">${d.id}</div>
+      <div class="doc-title-block">
+        <div class="doc-title">${d.title}</div>
+        <div class="doc-tags">${tagsHTML}</div>
+      </div>
+      <div class="arrow">▼</div>
+    </div>
+    <div class="doc-body"><div class="doc-body-inner">${bodyHTML}</div></div>
+  `;
+  list.appendChild(card);
+});
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('bankruptcy_checklist_intellectual') || '{}');
+    docs.forEach(d => {
+      if (saved[d.id]) {
+        document.getElementById('cb' + d.id).checked = true;
+        document.querySelector(`[data-id="${d.id}"]`).classList.add('completed');
+      }
+    });
+  } catch(e) {}
+  updateProgress();
+}
+
+function saveState() {
+  try {
+    const state = {};
+    docs.forEach(d => { state[d.id] = document.getElementById('cb' + d.id).checked; });
+    localStorage.setItem('bankruptcy_checklist_intellectual', JSON.stringify(state));
+  } catch(e) {}
+}
+
+function toggleCard(id) {
+  const card = document.querySelector(`[data-id="${id}"]`);
+  card.classList.toggle('open');
+}
+
+function toggleDone(id) {
+  const card = document.querySelector(`[data-id="${id}"]`);
+  const cb = document.getElementById('cb' + id);
+  card.classList.toggle('completed', cb.checked);
+  saveState();
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = docs.length;
+  const done = docs.filter(d => document.getElementById('cb' + d.id).checked).length;
+  document.getElementById('progressText').textContent = `${done} из ${total}`;
+  const bar = document.getElementById('progressBar');
+  bar.style.width = (done / total * 100) + '%';
+  bar.classList.toggle('done', done === total);
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.doc-card').forEach(card => {
+      if (f === 'all') { card.classList.remove('hidden'); return; }
+      const tags = card.dataset.tags.split(',');
+      card.classList.toggle('hidden', !tags.includes(f));
+    });
+  });
+});
+
+function copyTemplate(btn) {
+  const text = btn.parentElement.textContent.replace('Копировать', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Скопировано';
+    setTimeout(() => btn.textContent = 'Копировать', 2000);
+  });
+}
+
+loadState();
+</script>
+</body>
+</html>
